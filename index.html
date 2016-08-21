@@ -13,7 +13,19 @@
 </head>
 
 <body>
-    <!--<script src="js/site.js"></script>-->
+    <div>
+        <button onclick="play(0)">Play 1</button>
+        <button onclick="play(1)">Play 2</button>
+        <button onclick="play(2)">Play 3</button>
+    </div>
+    <div>
+        <button onclick="repeatPlay(0, this)">Play 1 (repeat)</button>
+        <button onclick="repeatPlay(1, this)">Play 2 (repeat)</button>
+        <button onclick="repeatPlay(2, this)">Play 3 (repeat)</button>
+    </div>
+
+    <script src="https://tonejs.github.io/CDN/latest/Tone.js"></script>
+    <script src="js/site.js"></script>
 </body>
 
 </html>
