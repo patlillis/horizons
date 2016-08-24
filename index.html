@@ -12,7 +12,8 @@
     <!--<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">-->
 </head>
 
-<body>
+<body bgcolor="#9DE0AD" onload="init()" onresize="metrics(), drawScene()">
+        <canvas id="cnvs" class="unselectable"></canvas>
     <div>
         <button onclick="play(0)">Play 1</button>
         <button onclick="play(1)">Play 2</button>
@@ -23,6 +24,7 @@
         <button onclick="repeatPlay(1, this)">Play 2 (repeat)</button>
         <button onclick="repeatPlay(2, this)">Play 3 (repeat)</button>
     </div>
+
 
     <script src="https://tonejs.github.io/CDN/latest/Tone.js"></script>
     <script src="js/site.js"></script>

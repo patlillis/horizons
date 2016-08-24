@@ -1,4 +1,5 @@
-var notes = ['C4', 'G4', 'D5'];
+var loopNotes = ['C4', 'G4', 'D5'];
+var singleNotes = ['E4', 'A4', 'C5'];
 var loops = [];
 var loopSynths = [];
 var singleSynths = [];
@@ -17,9 +18,9 @@ Tone.Transport.start();
 
 function play(number, loop) {
     if (loop)
-        loopSynths[number].triggerAttackRelease(notes[number], 0.2);
+        loopSynths[number].triggerAttackRelease(loopNotes[number], 0.2);
     else
-        singleSynths[number].triggerAttackRelease(notes[number], 0.2);
+        singleSynths[number].triggerAttackRelease(singleNotes[number], 0.2);
 }
 
 function repeatPlay(number, btn) {
