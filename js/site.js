@@ -23,13 +23,47 @@ function play(number, loop) {
         singleSynths[number].triggerAttackRelease(singleNotes[number], 0.2);
 }
 
-function repeatPlay(number, btn) {
-    if (btn.classList.contains('playing')) {
+function repeatPlay(number) {
+    if (loops[number].state == 'started') {
         loops[number].stop();
-        btn.classList.remove('playing');
+        return false;
     }
     else {
         loops[number].start();
-        btn.classList.add('playing');
+        return true;
     }
+}
+
+var canvas;
+var $canvas;
+var ctx;
+// var fontLoaded = $.Deferred();
+// var canvasLoaded = $.Deferred();
+
+var dragging;
+var mouseX;
+var mouseY;
+var dragHoldX;
+var backgrounds = [];
+var width;
+var height;
+
+function init() {
+    resize();
+    var s = Snap(width, height);
+    var t = s.polygon((width/2) - 150, 0, width/2, 100, (width/2) + 150, 0);
+    t.click(function() {
+        if (repeatPlay(0)) {
+            t.attr('fill', 'red');
+        }
+        else {
+            t.attr('fill', 'black');
+        }
+    });
+}
+
+//Re-size
+function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
 }

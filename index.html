@@ -12,9 +12,10 @@
     <!--<link href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" rel="stylesheet">-->
 </head>
 
-<body bgcolor="#9DE0AD" onload="init()" onresize="metrics(), drawScene()">
-        <canvas id="cnvs" class="unselectable"></canvas>
-    <div>
+<body bgcolor="#9DE0AD" onload="init()" onresize="resize()">
+    <!--<svg id="svg">-->
+        <!--<canvas id="cnvs" class="unselectable"></canvas>-->
+    <!--<div>
         <button onclick="play(0)">Play 1</button>
         <button onclick="play(1)">Play 2</button>
         <button onclick="play(2)">Play 3</button>
@@ -23,10 +24,12 @@
         <button onclick="repeatPlay(0, this)">Play 1 (repeat)</button>
         <button onclick="repeatPlay(1, this)">Play 2 (repeat)</button>
         <button onclick="repeatPlay(2, this)">Play 3 (repeat)</button>
-    </div>
+    </div>-->
 
-
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script src="https://tonejs.github.io/CDN/latest/Tone.js"></script>
+    <script src="js/snap.svg.js"></script>
+    <!--<script src="js/triangle.js"></script>-->
     <script src="js/site.js"></script>
 </body>
 
