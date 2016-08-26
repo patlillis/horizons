@@ -35,29 +35,26 @@ function repeatPlay(number) {
 }
 
 var canvas;
-var $canvas;
 var ctx;
-// var fontLoaded = $.Deferred();
-// var canvasLoaded = $.Deferred();
-
-var dragging;
-var mouseX;
-var mouseY;
-var dragHoldX;
-var backgrounds = [];
 var width;
 var height;
 
+var t;
+
 function init() {
+    canvas = document.getElementById("cnvs")
+    ctx = canvas.getContext("2d");
+
     resize();
-    var s = Snap(width, height);
-    var t = s.polygon((width/2) - 150, 0, width/2, 100, (width/2) + 150, 0);
-    t.click(function() {
-        if (repeatPlay(0)) {
-            t.attr('fill', 'red');
-        }
-        else {
-            t.attr('fill', 'black');
+
+    t = new Triangle(width, height);
+
+    t.drawOnscreen(ctx);
+
+    $(canvas).on('click', function(e) {
+        if (t.hitTest(e.pageX, e.pageY)) {
+            console.log('Hit!');
+            play(0);
         }
     });
 }
@@ -66,4 +63,12 @@ function init() {
 function resize() {
     width = window.innerWidth;
     height = window.innerHeight;
+
+    canvas.width = width;
+    canvas.height = height; 
+
+    if (t) {
+        t.resize(width, height);
+        t.drawOnscreen(ctx);
+    }
 }
