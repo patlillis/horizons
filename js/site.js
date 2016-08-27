@@ -47,7 +47,7 @@ function init() {
 
     resize();
 
-    t = new Triangle(width, height, width/2, 0, 150, 0);
+    t = new Triangle(new Vector(width/2, 0), new Vector(150, 0));
 
     t.drawOnscreen(ctx);
 
@@ -68,8 +68,7 @@ function resize() {
     canvas.height = height; 
 
     if (t) {
-        t.resize(width, height);
-        t.move(width/2, 0);
+        t.move(new Vector(width/2, 0));
         t.drawOnscreen(ctx);
     }
 }
