@@ -52,7 +52,7 @@ function init() {
     t.drawOnscreen(ctx);
 
     $(canvas).on('click', function(e) {
-        if (t.hitTest(e.pageX, e.pageY)) {
+        if (t.hitTest(new Vector(e.pageX, e.pageY))) {
             console.log('Hit!');
             play(0);
         }
