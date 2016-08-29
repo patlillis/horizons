@@ -1,0 +1,11 @@
+1: http://colorhunt.co/c/38145
+#222831
+#393E46
+#00ADB5
+#00FFF5
+
+2: http://colorhunt.co/c/38164
+#D65F5F
+#FAF99F
+#A1F6B6
+#78D8D0

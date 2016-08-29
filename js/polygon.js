@@ -1,7 +1,7 @@
 // Shape made up of N points (N should be >= 3)
 class Polygon extends Shape {
-    constructor(points = [], { position = Vector.Zero, origin = Vector.Zero } = {}) {
-        super({ position, origin });
+    constructor(points = [], { position, origin, color } = {}) {
+        super({ position, origin, color });
 
         this.points = points;
         if (this.points.length < 3) {
@@ -24,7 +24,7 @@ class Polygon extends Shape {
     }
 
     drawOffscreen() {
-        this.offCtx.fillStyle = "black";
+        this.offCtx.fillStyle = this.color;
         this.offCtx.beginPath();
         this.offCtx.moveTo(this.points[0].x, this.points[0].y);
 
@@ -34,10 +34,5 @@ class Polygon extends Shape {
         }
 
         this.offCtx.fill();
-
-        this.offCtx.fillStyle = "red";
-        for (var i = 0; i < this.points.length; i++) {
-            this.offCtx.fillRect(this.points[i].x, this.points[i].y, 1, 1); // fill in the pixel at (10,10)
-        }
     }
 }
