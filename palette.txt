@@ -9,3 +9,12 @@
 #FAF99F
 #A1F6B6
 #78D8D0
+
+
+
+//  This is the actual one used!
+3: http://colorhunt.co/c/2763
+#222831
+#393E46
+#00ADB5
+#EEEEEE

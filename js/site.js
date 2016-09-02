@@ -3,6 +3,8 @@ var singleNotes = ['E4', 'A4', 'C5'];
 var loops = [];
 var loopSynths = [];
 var singleSynths = [];
+var fps = 60;
+var stars = [];
 
 for (var i = 0; i < 3; i++) {
     var loopSynth = new Tone.Synth({ 'envelope': { 'release': 2 }}).toMaster();
@@ -17,8 +19,6 @@ for (var i = 0; i < 3; i++) {
 Tone.Transport.start();
 
 function play(number, loop) {
-    console.log(number, loop);
-
     if (loop)
         loopSynths[number].triggerAttackRelease(loopNotes[number], 0.2);
     else
@@ -40,6 +40,9 @@ var canvas;
 var ctx;
 var width;
 var height;
+var devicePixelRatio;
+var backingStoreRatio;
+var ratio;
 
 var shapes = {};
 
@@ -47,9 +50,19 @@ function init() {
     canvas = document.getElementById("cnvs")
     ctx = canvas.getContext("2d");
 
+    // finally query the various pixel ratios
+    devicePixelRatio = window.devicePixelRatio || 1,
+    backingStoreRatio = ctx.webkitBackingStorePixelRatio ||
+                        ctx.mozBackingStorePixelRatio ||
+                        ctx.msBackingStorePixelRatio ||
+                        ctx.oBackingStorePixelRatio ||
+                        ctx.backingStorePixelRatio || 1,
+
+    ratio = devicePixelRatio / backingStoreRatio;
+
     resize();
 
-    drawStars();
+    var shadowWidth = 30;
 
     //Top-center triangle
     shapes['top'] = new Polygon([
@@ -59,8 +72,17 @@ function init() {
     ], {
         position: new Vector(width/2, 0),
         origin: new Vector(300, 0),
-        color: '#D65F5F'
+        color: '#00ADB5'
     });
+    var d = 0.588002603548;
+    var shadow1X = shadowWidth * Math.cos(d);
+    var shadow1Y = shadowWidth * Math.sin(d);
+    // shapes['top'].addShadow([
+    //     new Vector(300 - shadow1X, 200 - shadow1Y),
+    //     new Vector(300, 200),
+    //     new Vector(600, 0),
+    //     new Vector(600 - shadow1X, -shadow1Y)
+    // ], '#222831');
 
     //Left corner
     shapes['left'] = new Polygon([
@@ -71,7 +93,7 @@ function init() {
     ], {
         position: new Vector(0, height),
         origin: new Vector(0, 350),
-        color: '#FAF99F'
+        color: '#222831'
     });
 
     //Right corner
@@ -83,23 +105,30 @@ function init() {
     ], {
         position: new Vector(width, height),
         origin: new Vector(300, 350),
-        color: '#A1F6B6'
+        color: '#222831'
     });
-
-    shapes['top'].drawOnscreen(ctx);
-    shapes['left'].drawOnscreen(ctx);
-    shapes['right'].drawOnscreen(ctx);
 
     $(canvas).on('click', function(e) {
         var hitPos = new Vector(e.pageX, e.pageY);
 
         if (shapes['top'].hitTest(hitPos))
-            play(0);
+            repeatPlay(0);
         else if (shapes['left'].hitTest(hitPos))
-            play(1);
+            repeatPlay(1);
         else if (shapes['right'].hitTest(hitPos))
-            play(2);
+            repeatPlay(2);
     });
+
+    setInterval(draw, 1000 / fps);
+}
+
+function draw() {
+    drawStars();
+    drawText();
+
+    shapes['top'].drawOnscreen(ctx);
+    shapes['left'].drawOnscreen(ctx);
+    shapes['right'].drawOnscreen(ctx);
 }
 
 //Re-size
@@ -110,33 +139,68 @@ function resize() {
     canvas.width = width;
     canvas.height = height; 
 
-    drawStars();
+    // upscale the canvas if the two ratios don't match
+    if (devicePixelRatio !== backingStoreRatio) {
+
+        var oldWidth = canvas.width;
+        var oldHeight = canvas.height;
+
+        canvas.width = oldWidth * ratio;
+        canvas.height = oldHeight * ratio;
+
+        canvas.style.width = oldWidth + 'px';
+        canvas.style.height = oldHeight + 'px';
+
+        // now scale the context to counter
+        // the fact that we've manually scaled
+        // our canvas element
+        ctx.scale(ratio, ratio);
+
+    }
+
+    generateStars();
 
     if (shapes['top']) {
         shapes['top'].move(new Vector(width/2, 0));
-        shapes['top'].drawOnscreen(ctx);
     }
 
     if (shapes['left']) {
         shapes['left'].move(new Vector(0, height));
-        shapes['left'].drawOnscreen(ctx);
     }
 
     if (shapes['right']) {
         shapes['right'].move(new Vector(width, height));
-        shapes['right'].drawOnscreen(ctx);
+    }
+}
+
+function generateStars() {
+    stars = [];
+
+    for(var n = 0; n < 100; n++){
+        var x=parseInt(Math.random()*width);
+        var y=parseInt(Math.random()*height);
+        var radius=Math.random()*1.5;
+
+        stars.push({ x, y, radius });
     }
 }
 
 function drawStars() {
     ctx.beginPath();
-    for(var n=0;n<100;n++){
-        var x=parseInt(Math.random()*width);
-        var y=parseInt(Math.random()*height);
-        var radius=Math.random()*1.5;
-        ctx.arc(x,y,radius,0,Math.PI*2,false);
+    ctx.fillStyle="white";
+
+    for (var n = 0; n < 100; n++) {
+        var star = stars[n]; 
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI*2, false);
         ctx.closePath();
     }
-    ctx.fillStyle="white";
+
     ctx.fill();
+}
+
+function drawText() {
+    ctx.font = "100 132px Raleway, sans-serif";
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.fillText("HORIZONS", width/2, height/2)
 }

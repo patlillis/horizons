@@ -20,7 +20,10 @@ body {
 
 canvas {
     display: block;
-    background: black;
+    background-image:
+    linear-gradient(
+      #222831 30%, #00ADB5
+    );
 }
 
 *.unselectable {
