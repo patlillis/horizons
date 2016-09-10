@@ -2,7 +2,7 @@
 //
 // Handles things like positioning and hit-detection.
 class Shape {
-    constructor({ position = Vector.Zero, origin = Vector.Zero, color = "white" } = {}) {
+    constructor({ position = Vector.zero, origin = Vector.zero, color = Color.white } = {}) {
         this.offCanvas = document.createElement('canvas');
         this.offCtx = this.offCanvas.getContext('2d');
 
@@ -12,13 +12,13 @@ class Shape {
     }
 
     // Move this shape to a different position on the page.
-    move(position = Vector.Zero) {
+    move(position = Vector.zero) {
         this.x = position.x;
         this.y = position.y;
     }
 
     // Re-set the origin of this shape.
-    recenter(origin = Vector.Zero) {
+    recenter(origin = Vector.zero) {
         this.originX = origin.x;
         this.originY = origin.y;
     }

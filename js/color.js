@@ -6,8 +6,8 @@ class Color {
         this.a = Color.sanitizeAlpha(a);
     }
 
-    static get White() { return new Color(255, 255, 255); }
-    static get Black() { return new Color(0, 0, 0); }
+    static get white() { return new Color(255, 255, 255); }
+    static get black() { return new Color(0, 0, 0); }
 
     static fromHex(hex, alpha = 1.0) {
         hex = hex.replace(/[^0-9A-F]/gi, '');

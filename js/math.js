@@ -12,3 +12,7 @@
 function clamp(num, min, max) {
   return Math.min(Math.max(num, min), max);
 };
+
+function mod(n, m) {
+    return ((n % m) + m) % m;
+};
