@@ -6,7 +6,8 @@ class Bars {
         direction = 0,
         distance = 0,
         duration = 1000,
-        color = "white",
+        startColor = Color.White,
+        endColor = startColor,
         onComplete = () => {}
      } = {}) {
          this.barWidth = barWidth;
@@ -15,7 +16,10 @@ class Bars {
          this.direction = direction;
          this.distance = distance;
          this.duration = duration;
-         this.color = color;
+
+         this.color = startColor;
+         this.targetColor = endColor;
+
          this.sin = Math.sin(direction);
          this.cos = Math.cos(direction);
          this.tan = Math.tan(direction);
@@ -41,17 +45,20 @@ class Bars {
          this.p4.x = this.p1.x + (this.barThickness) * this.sin;
          this.p4.y = this.p1.y - (this.barThickness) * this.cos;
          
-        this.tween = new TWEEN.Tween(this.offset)
+        this.positionTween = new TWEEN.Tween(this.offset)
             .to(this.targetOffset, this.duration)
             .easing(TWEEN.Easing.Quartic.Out)
             .onComplete(onComplete)
             .start();
+
+        this.colorTween = new TWEEN.Tween(this.color)
+            .to(this.targetColor, this.duration)
+            .easing(TWEEN.Easing.Quartic.Out)
+            .start();
     }
 
     draw(ctx) {
-        console.log(this.offset);
-
-        ctx.fillStyle = this.color;
+        ctx.fillStyle = this.color.toString();
         ctx.beginPath();
 
         ctx.moveTo(this.p1.x + this.offset.x, this.p1.y + this.offset.y);

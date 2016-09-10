@@ -91,11 +91,12 @@ function init() {
     // bars.push(new Bars({
     //     barWidth: 500,
     //     barThickness: 5,
-    //     position: new Vector(width / 2, 500),
-    //     direction: Math.PI / 4,
-    //     distance: 500,
-    //     duration: 2000,
-    //     color: '#00ADB5',
+    //     position: new Vector(width / 2, height),
+    //     direction: 0,
+    //     distance: height,
+    //     duration: 3500,
+    //     startColor: Color.fromHex('#222831'),
+    //     endColor: Color.fromHex('#222831', 0),
     //     onComplete: () => bars.splice(0)
     // }));
 
