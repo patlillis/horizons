@@ -43,6 +43,7 @@ var height;
 var devicePixelRatio;
 var backingStoreRatio;
 var ratio;
+var bars = [];
 
 var shapes = {};
 
@@ -87,6 +88,17 @@ function init() {
         color: '#222831'
     });
 
+    // bars.push(new Bars({
+    //     barWidth: 500,
+    //     barThickness: 5,
+    //     position: new Vector(width / 2, 500),
+    //     direction: Math.PI / 4,
+    //     distance: 500,
+    //     duration: 2000,
+    //     color: '#00ADB5',
+    //     onComplete: () => bars.splice(0)
+    // }));
+
     $(canvas).on('click', function(e) {
         var hitPos = new Vector(e.pageX, e.pageY);
 
@@ -102,11 +114,19 @@ function init() {
 }
 
 function draw() {
+    ctx.clearRect(0, 0, width, height);
+
+    TWEEN.update();
+
     drawStars();
 
     shapes['top'].drawOnscreen(ctx);
     shapes['left'].drawOnscreen(ctx);
     shapes['right'].drawOnscreen(ctx);
+
+    for (var bar of bars) {
+        bar.draw(ctx);
+    }
 }
 
 //Re-size
